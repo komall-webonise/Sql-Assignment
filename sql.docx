@@ -1,0 +1,84 @@
+﻿Database Schema:
+
+Create the following tables:
+
+1.User Table- to store user information
+
+mysql> create table user(user_id INT,name VARCHAR(50),birthdate DATE,profession VARCHAR(30),status VARCHAR(10),place VARCHAR(20),PRIMARY KEY (user_id));
+
+2.Friend_request – to store friend requests send by user
+
+mysql> create table friend_request(user_id INT,req_id INT);
+
+3.Friends- maintains the friend list of users
+
+mysql> create table friend(user_id INT,friend_id INT);
+
+4.Post- maintains the post information made by user
+
+mysql> create table post(post_id INT,post VARCHAR(200),user_id INT,PRIMARY KEY(post_id));
+
+5.Comment-maintains the information about the comment
+
+mysql> create table comment(comment_id INT, comment VARCHAR(200),post_id INT,PRIMARY KEY(comment_id));
+
+Insert DataBase into tables:
+
+1.User Table
+
+mysql> insert into user(user_id,name,birthdate,profession,status,place) values (2,'Chetna',2000-06-26,'Student','Single','AhemadNagar'),(3,'Manoj Bora',1979-02-04,'Buisness','Married','Pune'),(4,'Rohan ',2002-10-17,'Student','Single','California'),(5,'Anjali',1960-01-04,'Doctor','Divorce','Delhi'),(6,'Karuna',1990-06-03,'Student','Single','Pune'),(7,'Rajesh',1985-11-16,'Service','Married','Mumbai');
+
+2.Friend_request
+
+mysql> insert into friend_request(user_id,req_id) values (1,7),(1,6),(3,5),(4,6);
+
+3.Friend
+
+mysql> insert into friend(user_id,friend_id) values (1,4),(1,2),(3,2),(4,7),(6,5),(3,7),(4,1),(2,1),(2,3),(7,4),(5,6),(7,3);
+
+4.Post
+
+mysql> insert into post(post_id,post,user_id) values (1111,'Feeling happy.',1),(1112,'Had a fabulous trip to Kerala',2),(1113,'Disappointed and feeling very hungry',3),(1114,'Watching movie Angry Birds.',5),(1115,'Got Placed at webonise Lab',6),(1117,'Feeling sad.',7),(1116,'Loved the article wriiten by John Dane.',1);
+
+5.Comment
+
+mysql> insert into comment(comment_id,comment_stmt,post_id,user_id) values (9001,'be happy',1111,2),(9002,'Keep smiling',1111,7),(9003,'nice',1112,1),(9004,'Cheer up man!',1113,4),(9005,'make ur stomach filled up.',1113,6),(9006,'Enjoy',1114,1),(9007,'Congrats',1115,1),(9008,'Congratulations',1115,3),(9009,'Party',1115,7),(9010,'ohhh',1116,3),(9011,'even i ll like to read it.',1116,4),(9012,'its nice..',1116,1);
+
+Following queries:
+
+1. Users can send friend request to other users
+mysql> insert into friend_request(user_id,req_id) values (1,7),(1,6),(3,5),(4,6);
+
+2. User can post article
+mysql> insert into post(post_id,post,user_id) values (1111,'Feeling happy.',1),(1112,'Had a fabulous trip to Kerala',2),(1113,'Disappointed and feeling very hungry',3),(1114,'Watching movie Angry Birds.',5),(1115,'Got Placed at webonise Lab',6),(1117,'Feeling sad.',7),(1116,'Loved the article wriiten by John Dane.',1);
+
+3. User can able to comments on other user's post
+
+mysql> insert into comment(comment_id,comment_stmt,post_id,user_id) values (9001,'be happy',1111,2),(9002,'Keep smiling',1111,7),(9003,'nice',1112,1),(9004,'Cheer up man!',1113,4),(9005,'make ur stomach filled up.',1113,6),(9006,'Enjoy',1114,1),(9007,'Congrats',1115,1),(9008,'Congratulations',1115,3),(9009,'Party',1115,7),(9010,'ohhh',1116,3),(9011,'even i ll like to read it.',1116,4),(9012,'its nice..',1116,1);
+
+4. User can able to see list of friend Requests, friends, posts and comments made by that user.
+i) to see list of friend requests
+ 	mysql> select user.name from user,friend_request where user.user_id=friend_request.req_id and friend_request.user_id=1;
+
+ii)to see list of friends
+mysql> select user.name from user,friend where user.user_id=friend.friend_id and friend.user_id=1;
+
+          iii)to see list of posts
+		mysql> select post.post from post where user_id=1;
+
+	iv)to see list of comments made by the user
+		mysql> select comment_stmt from comment where user_id=3;
+
+5. User can able to see total counts of friend Requests, friends, posts and comments made by that user.
+	
+	i)total count of friend request
+		mysql> select count(*) from friend_request where user_id=1;
+
+	ii)total count of friends
+		mysql> select count(*) from friend where user_id=7;
+	
+	iii)total count of posts
+		mysql> select count(*) from post where user_id=3;
+
+	iv)total count of comments
+		mysql> select count(*) from comment where user_id=1;
